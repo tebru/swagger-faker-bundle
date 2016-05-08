@@ -1,0 +1,25 @@
+{
+    "name": "tebru/swagger-faker-bundle",
+    "description": "Return mock responses based on a swagger doc",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nate Brunette",
+            "email": "n@tebru.net"
+        }
+    ],
+    "require": {
+        "tebru/swagger-faker": "^0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tebru\\SwaggerFakerBundle\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/natebrunette/json-guard"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+services:
+  tebru.swagger_faker.request_subscriber:
+    class: Tebru\SwaggerFakerBundle\Subscriber\RequestSubscriber
+    arguments: ["@service_container"]
+    tags:
+      - { name: kernel.event_subscriber }
