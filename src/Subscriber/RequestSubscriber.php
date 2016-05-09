@@ -117,6 +117,7 @@ class RequestSubscriber implements EventSubscriberInterface
                 'Access-Control-Allow-Methods' => 'GET, POST, PATCH, PUT, DELETE',
                 'Access-Control-Allow-Origin' => $request->headers->get('origin'),
                 'Access-Control-Max-Age' => 86400,
+                'X-STATUS-CODE' => 200,
             ]);
 
             return $response;
@@ -132,7 +133,10 @@ class RequestSubscriber implements EventSubscriberInterface
         $swaggerSchema = $this->getFormatter($request);
         $response = $swaggerSchema($schema, $path, $operation, $responseCode, $config);
 
-        return new JsonResponse($response, $responseCode);
+        $jsonResponse = new JsonResponse($response, $responseCode);
+        $jsonResponse->headers->add(['X-STATUS-CODE' => $responseCode]);
+
+        return $jsonResponse;
     }
 
     /**
