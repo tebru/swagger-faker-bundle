@@ -112,13 +112,7 @@ class RequestSubscriber implements EventSubscriberInterface
 
         if (Request::METHOD_OPTIONS === $request->getMethod()) {
             $response = new Response();
-            $response->headers->add([
-                'Access-Control-Allow-Headers' => 'Authorization, Content-Type',
-                'Access-Control-Allow-Methods' => 'GET, POST, PATCH, PUT, DELETE',
-                'Access-Control-Allow-Origin' => $request->headers->get('origin'),
-                'Access-Control-Max-Age' => 86400,
-                'X-STATUS-CODE' => 200,
-            ]);
+            $response->headers->add($this->getResponseHeaders($request));
 
             return $response;
         }
@@ -134,7 +128,7 @@ class RequestSubscriber implements EventSubscriberInterface
         $response = $swaggerSchema($schema, $path, $operation, $responseCode, $config);
 
         $jsonResponse = new JsonResponse($response, $responseCode);
-        $jsonResponse->headers->add(['X-STATUS-CODE' => $responseCode]);
+        $jsonResponse->headers->add($this->getResponseHeaders($request));
 
         return $jsonResponse;
     }
@@ -201,6 +195,7 @@ class RequestSubscriber implements EventSubscriberInterface
      * @param Request $request
      * @param $operation
      * @return int
+     * @throws InvalidArgumentException
      */
     private function getResponseCode(Request $request, $operation)
     {
@@ -209,6 +204,23 @@ class RequestSubscriber implements EventSubscriberInterface
         }
 
         return $this->container->getParameter('swagger_faker.default_' . $operation);
+    }
+
+    /**
+     * Adding headers for CORS
+     *
+     * @param Request $request
+     * @return array
+     */
+    private function getResponseHeaders(Request $request)
+    {
+        return [
+            'Access-Control-Allow-Headers' => 'Authorization, Content-Type',
+            'Access-Control-Allow-Methods' => 'GET, POST, PATCH, PUT, DELETE',
+            'Access-Control-Allow-Origin' => $request->headers->get('origin'),
+            'Access-Control-Max-Age' => 86400,
+            'X-STATUS-CODE' => 200,
+        ];
     }
 
     /**
