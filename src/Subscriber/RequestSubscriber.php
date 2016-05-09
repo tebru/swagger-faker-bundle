@@ -7,7 +7,11 @@
 namespace Tebru\SwaggerFakerBundle\Subscriber;
 
 use Faker\Factory;
+use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,11 +65,19 @@ class RequestSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * Create mock response
+     *
+     * @param GetResponseEvent $event
+     * @throws ServiceCircularReferenceException
+     * @throws ServiceNotFoundException
+     */
     public function onKernelRequest(GetResponseEvent $event)
     {
         $router = $this->container->get('router');
         $request = $event->getRequest();
 
+        // skip if not enabled
         if (false === $this->isEnabled($request)) {
             return;
         }
@@ -78,14 +90,20 @@ class RequestSubscriber implements EventSubscriberInterface
             return;
         }
 
+        // try to find controller, on exception, create mock response
         try {
             $router->getMatcher()->match($request->getPathInfo());
-        } catch (\RuntimeException $exception) {
+        } catch (RuntimeException $exception) {
             $response = $this->getMockResponse();
             $event->setResponse($response);
         }
     }
 
+    /**
+     * Create a mock response
+     *
+     * @return JsonResponse
+     */
     private function getMockResponse()
     {
         $request = Request::createFromGlobals();
@@ -103,6 +121,8 @@ class RequestSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * Get the faker formatter
+     *
      * @return callable
      */
     private function getFormatter(Request $request)
@@ -114,11 +134,23 @@ class RequestSubscriber implements EventSubscriberInterface
         return $generator->getFormatter('swaggerSchema');
     }
 
+    /**
+     * Get the seed from the request or use config default
+     *
+     * @param Request $request
+     * @return int
+     */
     private function getSeed(Request $request)
     {
         return (int) $request->headers->get('x-swagger-faker-seed', $this->container->getParameter('swagger_faker.seed'));
     }
 
+    /**
+     * Check if bundle is enabled
+     *
+     * @param Request $request
+     * @return bool
+     */
     private function isEnabled(Request $request)
     {
         if ($request->headers->has('x-swagger-faker-enabled')) {
@@ -128,6 +160,13 @@ class RequestSubscriber implements EventSubscriberInterface
         return true;
     }
 
+    /**
+     * Check if we should hijack all request and use mock data
+     *
+     * @param Request $request
+     * @return bool
+     * @throws InvalidArgumentException
+     */
     private function shouldHijack(Request $request)
     {
         if ($request->headers->has('x-swagger-faker-hijack')) {
@@ -137,6 +176,13 @@ class RequestSubscriber implements EventSubscriberInterface
         return $this->container->getParameter('swagger_faker.hijack');
     }
 
+    /**
+     * Get the target response code
+     *
+     * @param Request $request
+     * @param $operation
+     * @return int
+     */
     private function getResponseCode(Request $request, $operation)
     {
         if ($request->headers->has('x-swagger-faker-response-code')) {
@@ -146,6 +192,13 @@ class RequestSubscriber implements EventSubscriberInterface
         return $this->container->getParameter('swagger_faker.default_' . $operation);
     }
 
+    /**
+     * Get the config aray
+     *
+     * @param Request $request
+     * @return array
+     * @throws InvalidArgumentException
+     */
     private function getConfig(Request $request)
     {
         $maxItems = (int) $request->headers->get('x-swagger-faker-max-items', $this->container->getParameter('swagger_faker.max_items'));

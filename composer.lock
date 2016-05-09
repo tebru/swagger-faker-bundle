@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f09569a045c3e891915d9670f04249ed",
-    "content-hash": "f8e724f8690cb07554db272e6f876c6f",
+    "hash": "b5dde9ef7f034bcc01052f5b82095cc0",
+    "content-hash": "1bee5b0a9529813b91f82db089613922",
     "packages": [
         {
             "name": "fzaninotto/faker",
@@ -181,16 +181,16 @@
         },
         {
             "name": "tebru/swagger-faker",
-            "version": "v0.1.0",
+            "version": "v0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tebru/swagger-faker.git",
-                "reference": "c038b65cc01b0b8d17a652eb9845f5fa2dd6b0d4"
+                "reference": "40c19173612c1eecce63705c37cbbdbe7c9806a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tebru/swagger-faker/zipball/c038b65cc01b0b8d17a652eb9845f5fa2dd6b0d4",
-                "reference": "c038b65cc01b0b8d17a652eb9845f5fa2dd6b0d4",
+                "url": "https://api.github.com/repos/tebru/swagger-faker/zipball/40c19173612c1eecce63705c37cbbdbe7c9806a0",
+                "reference": "40c19173612c1eecce63705c37cbbdbe7c9806a0",
                 "shasum": ""
             },
             "require": {
@@ -216,7 +216,7 @@
                 }
             ],
             "description": "Uses Faker to fake Swagger schemas",
-            "time": "2016-05-08 17:12:05"
+            "time": "2016-05-08 23:03:57"
         }
     ],
     "packages-dev": [],

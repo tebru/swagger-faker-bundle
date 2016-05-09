@@ -10,7 +10,6 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Tebru\SwaggerFakerBundle\Subscriber\RequestSubscriber;
 
 /**
  * Class SwaggerFakerExtension
@@ -64,6 +63,13 @@ class SwaggerFakerExtension extends Extension
         $container->setParameter('swagger_faker.min_length', $configs['min_length']);
     }
 
+    /**
+     * Returns the recommended alias to use in XML.
+     *
+     * This alias is also the mandatory prefix to use when using YAML.
+     *
+     * @return string The alias
+     */
     public function getAlias()
     {
         return 'swagger_faker';

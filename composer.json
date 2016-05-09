@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "tebru/swagger-faker": "^0.1"
+        "tebru/swagger-faker": "^0.1.1"
     },
     "autoload": {
         "psr-4": {
