@@ -96,7 +96,7 @@ class RequestSubscriber implements EventSubscriberInterface
         $config = $this->getConfig($request);
 
         /** @see SwaggerProvider::swaggerSchema */
-        $swaggerSchema = $this->getFormatter();
+        $swaggerSchema = $this->getFormatter($request);
         $response = $swaggerSchema($schema, $path, $operation, $responseCode, $config);
 
         return new JsonResponse($response, $responseCode);
@@ -105,12 +105,18 @@ class RequestSubscriber implements EventSubscriberInterface
     /**
      * @return callable
      */
-    private function getFormatter()
+    private function getFormatter(Request $request)
     {
         $generator = Factory::create();
+        $generator->seed($this->getSeed($request));
         $generator->addProvider(new SwaggerProvider($generator));
 
         return $generator->getFormatter('swaggerSchema');
+    }
+
+    private function getSeed(Request $request)
+    {
+        return (int) $request->headers->get('x-swagger-faker-seed', $this->container->getParameter('swagger_faker.seed'));
     }
 
     private function isEnabled(Request $request)

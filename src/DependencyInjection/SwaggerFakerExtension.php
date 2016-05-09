@@ -45,6 +45,7 @@ class SwaggerFakerExtension extends Extension
 
         $container->setParameter('swagger_faker.schema', $configs['schema']);
         $container->setParameter('swagger_faker.hijack', $configs['hijack']);
+        $container->setParameter('swagger_faker.seed', $configs['seed']);
 
         $container->setParameter('swagger_faker.default_get', $configs['get']);
         $container->setParameter('swagger_faker.default_post', $configs['post']);

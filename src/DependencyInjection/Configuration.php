@@ -29,6 +29,7 @@ class Configuration implements ConfigurationInterface
         $rootNode->children()->scalarNode('schema')->isRequired()->end();
         $rootNode->children()->booleanNode('enabled')->defaultFalse()->end();
         $rootNode->children()->booleanNode('hijack')->defaultFalse()->end();
+        $rootNode->children()->integerNode('seed')->defaultNull()->end();
 
         $rootNode->children()->integerNode('get')->defaultValue(200)->end();
         $rootNode->children()->integerNode('post')->defaultValue(201)->end();
