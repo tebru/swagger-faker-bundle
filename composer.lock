@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b5dde9ef7f034bcc01052f5b82095cc0",
-    "content-hash": "1bee5b0a9529813b91f82db089613922",
+    "hash": "85c88dff0681385e99033e25507adea0",
+    "content-hash": "3c65cf4e707c6b06cc396c96fbdcc508",
     "packages": [
         {
             "name": "fzaninotto/faker",
@@ -60,13 +60,13 @@
             "version": "v0.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/natebrunette/json-guard.git",
-                "reference": "c253388708ed0555eef0752153ceb03029785716"
+                "url": "https://github.com/thephpleague/json-guard.git",
+                "reference": "5b25c41c2f8485c40e7d3e848c3b505cf68fdce1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/natebrunette/json-guard/zipball/c253388708ed0555eef0752153ceb03029785716",
-                "reference": "c253388708ed0555eef0752153ceb03029785716",
+                "url": "https://api.github.com/repos/thephpleague/json-guard/zipball/5b25c41c2f8485c40e7d3e848c3b505cf68fdce1",
+                "reference": "5b25c41c2f8485c40e7d3e848c3b505cf68fdce1",
                 "shasum": ""
             },
             "require": {
@@ -96,22 +96,7 @@
                     "src/functions.php"
                 ]
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "League\\JsonGuard\\Test\\": "tests"
-                },
-                "files": [
-                    "tests/helpers.php"
-                ]
-            },
-            "scripts": {
-                "test": [
-                    "phpunit"
-                ],
-                "cs": [
-                    "phpcs --standard=psr2 src/"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -126,16 +111,13 @@
             "description": "A validator for JSON using json-schema.",
             "homepage": "https://github.com/thephpleague/json-guard",
             "keywords": [
-                "Validation",
                 "json",
                 "json-schema",
                 "json-schema.org",
-                "schema"
+                "schema",
+                "validation"
             ],
-            "support": {
-                "source": "https://github.com/natebrunette/json-guard/tree/v0.2.1"
-            },
-            "time": "2016-05-07 04:12:34"
+            "time": "2016-05-09 01:18:33"
         },
         {
             "name": "tebru/enum",
@@ -181,16 +163,16 @@
         },
         {
             "name": "tebru/swagger-faker",
-            "version": "v0.1.1",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tebru/swagger-faker.git",
-                "reference": "40c19173612c1eecce63705c37cbbdbe7c9806a0"
+                "reference": "033816d465ce17d27b6600271cbfdbb95405b12d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tebru/swagger-faker/zipball/40c19173612c1eecce63705c37cbbdbe7c9806a0",
-                "reference": "40c19173612c1eecce63705c37cbbdbe7c9806a0",
+                "url": "https://api.github.com/repos/tebru/swagger-faker/zipball/033816d465ce17d27b6600271cbfdbb95405b12d",
+                "reference": "033816d465ce17d27b6600271cbfdbb95405b12d",
                 "shasum": ""
             },
             "require": {
@@ -216,7 +198,7 @@
                 }
             ],
             "description": "Uses Faker to fake Swagger schemas",
-            "time": "2016-05-08 23:03:57"
+            "time": "2016-05-09 12:44:58"
         }
     ],
     "packages-dev": [],

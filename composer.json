@@ -9,17 +9,11 @@
         }
     ],
     "require": {
-        "tebru/swagger-faker": "^0.1.1"
+        "tebru/swagger-faker": "^0.1.2"
     },
     "autoload": {
         "psr-4": {
             "Tebru\\SwaggerFakerBundle\\": "src/"
         }
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/natebrunette/json-guard"
-        }
-    ]
+    }
 }
