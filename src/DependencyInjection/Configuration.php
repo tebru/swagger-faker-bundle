@@ -34,7 +34,7 @@ class Configuration implements ConfigurationInterface
         $rootNode->children()->integerNode('get')->defaultValue(200)->end();
         $rootNode->children()->integerNode('post')->defaultValue(201)->end();
         $rootNode->children()->integerNode('put')->defaultValue(200)->end();
-        $rootNode->children()->integerNode('patch')->defaultValue(204)->end();
+        $rootNode->children()->integerNode('patch')->defaultValue(200)->end();
         $rootNode->children()->integerNode('delete')->defaultValue(204)->end();
 
         $rootNode->children()->integerNode('max_items')->defaultValue(10)->end();
