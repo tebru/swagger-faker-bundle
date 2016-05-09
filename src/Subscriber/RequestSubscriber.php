@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Tebru\SwaggerFaker\SwaggerProvider;
 
@@ -103,10 +104,24 @@ class RequestSubscriber implements EventSubscriberInterface
      * Create a mock response
      *
      * @return JsonResponse
+     * @throws \InvalidArgumentException
      */
     private function getMockResponse()
     {
         $request = Request::createFromGlobals();
+
+        if (Request::METHOD_OPTIONS === $request->getMethod()) {
+            $response = new Response();
+            $response->headers->add([
+                'Access-Control-Allow-Headers' => 'Authorization, Content-Type',
+                'Access-Control-Allow-Methods' => 'GET, POST, PATCH, PUT, DELETE',
+                'Access-Control-Allow-Origin' => $request->headers->get('origin'),
+                'Access-Control-Max-Age' => 86400,
+            ]);
+
+            return $response;
+        }
+
         $path = $request->getPathInfo();
         $operation = strtolower($request->getMethod());
         $responseCode = $this->getResponseCode($request, $operation);
