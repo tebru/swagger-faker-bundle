@@ -62,7 +62,7 @@ class RequestSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'kernel.request' => 'onKernelRequest',
+            'kernel.request' => ['onKernelRequest', 1000],
         ];
     }
 
