@@ -75,7 +75,7 @@ class RequestSubscriber implements EventSubscriberInterface
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        $router = $this->container->get('router');
+        $routerService = $this->container->get('router');
         $request = $event->getRequest();
 
         // skip if not enabled
@@ -91,9 +91,14 @@ class RequestSubscriber implements EventSubscriberInterface
             return;
         }
 
+        // update the router's context from request
+        $router = clone $routerService;
+        $context = $router->getContext()->fromRequest($request);
+        $router->setContext($context);
+
         // try to find controller, on exception, create mock response
         try {
-            $router->getMatcher()->match($request->getPathInfo());
+            $router->matchRequest($request);
         } catch (RuntimeException $exception) {
             $response = $this->getMockResponse();
             $event->setResponse($response);
@@ -219,6 +224,7 @@ class RequestSubscriber implements EventSubscriberInterface
             'Access-Control-Allow-Methods' => 'GET, POST, PATCH, PUT, DELETE',
             'Access-Control-Allow-Origin' => $request->headers->get('origin'),
             'Access-Control-Max-Age' => 86400,
+            'Allow' => 'GET, POST, PATCH, PUT, DELETE',
             'X-STATUS-CODE' => 200,
         ];
     }
